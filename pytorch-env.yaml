@@ -1,0 +1,5 @@
+name: pytorch
+dependencies:
+- python=3.7
+- jupyter=1.0.0
+- matplotlib=2.2.3
