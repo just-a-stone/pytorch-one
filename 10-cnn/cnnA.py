@@ -4,6 +4,8 @@ from torch.autograd import Variable
 from torchvision import datasets, transforms
 
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 class InceptionA(torch.nn.Module):
     def __init__(self, in_channels):
         super(InceptionA, self).__init__()
@@ -55,7 +57,7 @@ class Model(torch.nn.Module):
         x = self.fc(x)
         return F.log_softmax(x)
 
-model = Model()
+model = Model().to(device)
 
 criterion = torch.nn.NLLLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.5)
@@ -77,7 +79,7 @@ test_loader = torch.utils.data.DataLoader(
     batch_size=100, shuffle=True
 )
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 
 def train(epoch):
     model.train()
