@@ -77,10 +77,12 @@ test_loader = torch.utils.data.DataLoader(
     batch_size=100, shuffle=True
 )
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 def train(epoch):
     model.train()
     for batch_idx, (data, target) in enumerate(train_loader):
-        data, target = Variable(data), Variable(target)
+        data, target = data.to(device), target.to(device)
         optimizer.zero_grad()
 
         output = model(data)
@@ -100,7 +102,7 @@ def test(epoch):
     test_loss = 0
     with torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):
-            data, target = Variable(data), Variable(target)
+            data, target = data.to(device), target.to(device)
             output = model(data)
             test_loss += F.nll_loss(output, target, reduction='sum').item()
             pred = output.max(1, keepdim=True)[1]

@@ -6,7 +6,6 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
 
-# @TODO 入参有问题
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
